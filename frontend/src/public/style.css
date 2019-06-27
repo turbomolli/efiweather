@@ -9,6 +9,15 @@ body{
 }
 
 .icon {
-  width: 30vw;
-  height: 30vw;
+  /*width: 30vw;
+  height: 30vw; */
+}
+
+ul {
+  padding-inline-start: unset;
+}
+
+ul li {
+  display: inline;
+  padding: 1em;
 }

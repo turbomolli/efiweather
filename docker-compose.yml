@@ -3,16 +3,11 @@ version: '3'
 services:
   weatherapp-backend:
     build: ./backend
-    volumes:
-      - ./backend:/api
     ports:
       - 9000:9000
   
   weatherapp-frontend:
     build: ./frontend
-    working_dir: /app
-    volumes:
-      - ./:/app
     ports:
       - 8000:8000
     depends_on:
