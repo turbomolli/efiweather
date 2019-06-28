@@ -23,7 +23,7 @@ const getForecastFromApi = async (lat, lon) => {
   }
 
   return {};
-}
+};
 
 class Weather extends React.Component {
   constructor(props) {
@@ -43,36 +43,24 @@ class Weather extends React.Component {
   async componentWillMount() {
     await this.getGeoLoc();
     const weather = await getWeatherFromApi();
-
-    /*
-    console.log(this.state.lon + ' ' + this.state.lat + ' ffdf');
-
-    if (this.state.lon !== '') {
-      const forecast = await getForecastFromApi(this.state.lat, this.state.lon);
-      this.setState({
-        forecastArr: forecast,
-      });
-    }
-    // console.log(forecast);
-    */
     this.setState({ icon: weather.icon.slice(0, -1) });
-    
   }
 
   componentDidMount() {
-    
+
   }
 
-
+  // Get geolocation and forecast
   getGeoLoc() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const currentLongitude = JSON.stringify(Math.round(position.coords.longitude));
         const currentLatitude = JSON.stringify(Math.round(position.coords.latitude));
-  
-        console.log(currentLatitude);
-        console.log(currentLongitude);
 
+        console.log(`Lat: ${currentLatitude}`);
+        console.log(`Lon: ${currentLongitude}`);
+
+        // Get forecast with current coordinates
         getForecastFromApi(currentLatitude, currentLongitude)
         .then(res => this.setState(
           {
@@ -96,10 +84,12 @@ class Weather extends React.Component {
   render() {
     const { icon } = this.state;
 
+    // Current weather icon
     const current = this.state.forecastArr.slice(0, 1).map((item, index) => (
-      <img key={item.dt} alt="forecast" src={`/img/${item.weather[0].icon.slice(0, -1)}.svg`} />
+      <img key={item.dt} alt="current" src={`/img/${item.weather[0].icon.slice(0, -1)}.svg`} />
     ));
 
+    // Forecast icons
     const forecast = this.state.forecastArr.slice(1, 6).map((item, index) => (
       <li key={item.dt}>
         <img height="40" alt={item.dt_txt} src={`/img/${item.weather[0].icon.slice(0, -1)}.svg`} />
